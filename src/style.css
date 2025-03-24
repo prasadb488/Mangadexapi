@@ -1,0 +1,154 @@
+
+body{
+  background-image: url(../1337543.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#logo{
+  border-radius: 100px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+.header{
+ 
+  display: flex;
+}
+#search-box{
+  width: 500px;
+  height: 60px;
+  margin-left: 370px;
+  margin-top: 15px;
+  border-radius: 5px;
+  background-color: rgb(93, 151, 213);;
+
+  display: flex;
+}
+
+#search_Bar{
+  width: 440px;
+  border: none;
+ background-color: aliceblue;
+ font-size: large;
+}
+#search{
+  height: 60px;
+  width: 60px;
+  border: none;
+  /* background-color: transparent; */
+  cursor: pointer;
+  border-radius: 0px 5px 3px 0px;
+  background-color: rgb(93, 151, 213);
+}
+#search_Bar::placeholder{
+  text-align: center;
+}
+#search:active{
+  transform: translateX(0.7px)translateY(0.7px);
+}
+/* #search:hover{
+ background-color: rgb(197, 242, 242);
+} */
+#Top-rated{
+  text-align: center;
+  font-size: 40px;
+}
+
+
+.card{
+  margin: 20px auto auto auto;
+  width: 290px;
+  background-color: hsl(216, 50%, 16%);
+  border-radius: 10px;
+  /* display:flex; */
+  /* flex-direction: column; */
+}
+
+#image{
+  border-radius: 10px;
+  margin: 20px 20px 0px 20px;
+}
+.matter{
+  margin-top: 10px;
+  padding-left:20px;
+  font-family: "Outfit", serif;
+  color: hsl(0, 0%, 100%);
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+#title{
+  margin-bottom: 0px;
+}
+#para{
+  font-weight: lighter;
+  margin-bottom: 0px;
+  font-size: small;
+  color: hsl(215, 51%, 70%);
+}
+#timez{
+  font-family: "Outfit", serif;
+  color: hsl(178, 100%, 50%);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#days{
+  font-weight: medium;
+  font-family: "Outfit", serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0px;
+  font-size: small;
+  color: hsl(215, 51%, 70%);
+}
+.daysz{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right:20px;
+
+}
+#pic{
+  border-radius: 100px;
+  border: 1px solid white;
+}
+.footer{
+  padding: 5px 20px 10px 20px;
+  display: flex;
+}
+#foot{
+  font-weight: lighter;
+  color: white;
+  font-family: "Outfit", serif;
+  margin-top: 5px;
+  margin-left: 15px;  
+}
+#name{
+  font-weight: normal;
+
+}
+hr{
+  margin-right: 20px;
+}
+#icon{
+  height: 12px;
+  /* border: 1px solid white; */
+  margin-right: 5px;
+  margin-top: 13px;
+  
+}
+#icons{
+  display: flex;
+  flex-direction: row;
+}
+#clock{
+  display: flex;
+  flex-direction: row;
+}
+#clocks{
+  height: 12px;
+  margin-top: 13px;
+  margin-right: 2px;
+}
+.cardscontainer{
+  display: flex;
+  overflow-x: scroll;
+}
