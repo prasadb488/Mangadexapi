@@ -1,4 +1,4 @@
-import trim from "./utils/trim";
+import {trim,trimfollowers} from "./utils/trim";
 const app = document.querySelector(".cardscontainer");
 //TODO: add titles for undefined
 const func = fetch("https://api.mangadex.org/manga?order[followedCount]=desc")
@@ -28,10 +28,10 @@ ${response.data.map((i) => {
         <p id="para">${des}</p>
           <section class="daysz">
             <section id="icons">
-              <h5 id="timez">Rating</h5>
+              <h5 id="timez">Followers</h5>
             </section>
             <section id="clock">
-              <p id="days"> ⭐️⭐️⭐️⭐️⭐️</p>
+              <p id="days"> pppp</p>
             </section>
           </section>
           <hr>
@@ -75,9 +75,19 @@ ${response.data.map((i) => {
       });
       return atb.id;
     });
-    console.log(response);
+    // console.log(response);
 
     lt.forEach((element, i) => {
+      const rating = fetch(`https://api.mangadex.org/statistics/manga/${response.data[i].id}`)
+      .then((r)=>{
+        return r.json();
+      }).then((ratin)=>{
+        // console.log(ratin);
+        // console.log(response.data[i].id);
+        const id=response.data[i].id;
+        const rt = document.querySelectorAll("#days")
+        rt[i].textContent = trimfollowers(ratin.statistics[id].follows)
+      })
       // console.log(element, response);
       const func = fetch(`https://api.mangadex.org/cover/${element}`)
         .then((m) => {
