@@ -1,23 +1,16 @@
 import {trim,trimfollowers} from "./utils/trim";
 const app = document.querySelector(".cardscontainer");
-//TODO: add titles for undefined
-const func = fetch("https://api.mangadex.org/manga?order[followedCount]=desc")
-  .then((Message) => {
-    return Message.json();
-  })
-  .then((response) => {
-    app.innerHTML = `
-${response.data.map((i) => {
-  const atb = i.attributes.altTitles.find((val) => val.en);
-  const title = trim(i.attributes.title.en, 26);
-  const altitle = trim(
-    i.attributes.title.en === undefined ? atb.en : i.attributes.title.en,
-    26
-  );
-  const des = trim(i.attributes.description.en, 100);
-  //   console.log(atb);
 
-  return `
+async function dataretrieve(){
+  try{
+  const response = await fetch("/api/manga?order[followedCount]=desc")
+  const resjson = await response.json()
+  app.innerHTML=`${resjson.data.map((i)=>{
+    const atb = i.attributes.altTitles.find((val) => val.en);
+    const title = trim(i.attributes.title.en, 26);
+    const altitle = trim(i.attributes.title.en === undefined ? atb.en : i.attributes.title.en,26);
+    const des = trim(i.attributes.description.en, 100);
+    return `
 <div class="card">
       <img id="image" src="./517K-PLywYL.webp" width="250" height="250">
       <div class="matter">
@@ -38,78 +31,83 @@ ${response.data.map((i) => {
       </div>
       <section class="footer">
         <!-- <img id="pic" src="images/image-avatar.png" width="30px" height="30px"> -->
-        <p id="foot">Directed by <span id="name">Ryuu Nakayama</span></p>
+        <p id="foot">Author: <span id="name">Ryuu Nakayama</span></p>
       </section>
-  </div>
-  `;
-})}
-  `;
-    return response;
-  })
-  .then((response) => {
-    // console.log(response);
-    const lt = response.data.map((i) => {
-      const atb = i.relationships.find((val) => {
-        return val.type === "author";
-      });
-      return atb.id;
+  </div>`;
+  })}`;
+  const lt = resjson.data.map((i)=>{
+    const atb = i.relationships.find((val)=>{
+      return val.type==="author";
     });
-    lt.forEach((element, i) => {
-      const func = fetch(`https://api.mangadex.org/author/${element}`)
-        .then((m) => {
-          return m.json();
-        })
-        .then((res) => {
-          // console.log(res.data.attributes.name);
-          const docs = document.querySelectorAll("#name");
-          docs[i].textContent = res.data.attributes.name;
-        });
-    });
-    return response;
-  })
-  .then((response) => {
-    // console.log(response);
-    const lt = response.data.map((i) => {
-      const atb = i.relationships.find((val) => {
-        return val.type === "cover_art";
-      });
-      return atb.id;
-    });
-    // console.log(response);
-
-    lt.forEach((element, i) => {
-      const rating = fetch(`https://api.mangadex.org/statistics/manga/${response.data[i].id}`)
-      .then((r)=>{
-        return r.json();
-      }).then((ratin)=>{
-        // console.log(ratin);
-        // console.log(response.data[i].id);
-        const id=response.data[i].id;
-        const rt = document.querySelectorAll("#days")
-        rt[i].textContent = trimfollowers(ratin.statistics[id].follows)
-      })
-      // console.log(element, response);
-      const func = fetch(`https://api.mangadex.org/cover/${element}`)
-        .then((m) => {
-          return m.json();
-        })
-        .then((res) => {
-          // console.log(res.data.attributes.fileName, response.data[i].id);
-          fetch(
-            `https://uploads.mangadex.org/covers/${response.data[i].id}/${res.data.attributes.fileName}`
-          ).then((result) => {
-            // console.log(7878, result);
-            const img = document.querySelectorAll("#image");
-            img[i].src = result.url;
-          });
-        });
-    });
-    return response;
-  })
-  .catch((error) => {
-    console.log(error);
+    return atb.id;
   });
+  lt.forEach((element,i)=>{
+    author(element,i)
+  });
+  const lt1 = resjson.data.map((i) => {
+    const atb = i.relationships.find((val) => {
+      return val.type === "cover_art";
+    });
+    return atb.id;
+  });
+  lt1.forEach((element,i)=>{
+    statistics(resjson.data[i].id,i)
+    coverid(resjson,element,i)
+  })
+} catch(err){
+  console.log(err);
+}
+}
 
-// // setInterval(() => {
-//   console.log(909090);
-// }, 2000);
+dataretrieve()
+
+async function author(ele,i){
+  try{
+  const auth = await fetch(`/api/author/${ele}`);
+  const authjson = await auth.json();
+  // return authjson;
+  const docs = document.querySelectorAll("#name");
+  docs[i].textContent = authjson.data.attributes.name;
+  } catch(err){
+    console.log(err);
+  }
+} 
+
+async function statistics(ele,i){
+  try{
+    const rating = await fetch(`/api/statistics/manga/${ele}`)
+    const rtjson = await rating.json();
+    // return rtjson;
+    const id=ele;
+    const rt = document.querySelectorAll("#days")
+    rt[i].textContent = trimfollowers(rtjson.statistics[id].follows)
+  }catch(err){
+    console.log(err);
+  }
+}
+
+async function coverid(resjson,ele,i){
+  try{
+    const func = await fetch(`/api/cover/${ele}`)
+    const funcjson = await func.json();
+    // return funcjson;
+    const result = await coverpic(resjson.data[i].id,funcjson.data.attributes.fileName,i)
+    const img = document.querySelectorAll("#image");
+    img[i].src = result.url;
+  }catch(err){
+    console.log(err);
+  }
+}
+
+async function coverpic(id,filename,i){
+  try{
+    const pic = await fetch(`/uploads/covers/${id}/${filename}`)
+    return pic;
+  }catch(err){
+    console.log(err);
+  }
+}
+
+// // // setInterval(() => {
+// //   console.log(909090);
+// // }, 2000);

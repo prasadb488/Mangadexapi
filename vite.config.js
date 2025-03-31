@@ -9,7 +9,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
-      "/upload": {
+      "/uploads": {
         target: "https://uploads.mangadex.org",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/uploads/, ""),
