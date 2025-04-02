@@ -7,19 +7,29 @@
     <link rel="stylesheet" href="./src/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
     <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <title>animie Rating</title>
   </head>
   <body>
     <div id="app">
-    <div class="header">
-      <img src="./logo.JPG" alt="website logo" height="80px" width="80px" id="logo">
+      <!-- <img src="./logo.JPG" alt="website logo" height="80px" width="80px" id="logo"> -->
+      <div class="header">
+        <div id="l">
+        <img src="./anime.PNG" alt="website logo" height="150px" width="150px" id="logo">
+        </div>
       <div id="search-box">
         <input id = "search_Bar" placeholder="Search An Anime" type="text">
         <button type="submit" id="search"><img src="./icons8-search-symbol-64.png" id="searchimage" width="50px" height="50px"></button>
       </div>
-      <div class="search_banner">
+      <div class="menu ">
+        <button>
+          <span class="material-symbols-outlined">
+          menu
+          </span>
+        </button>
       </div>
+      <!-- <div class="search_banner"></div> -->
     </div>
     <p id="Top-rated">Top Rated Anime</p>
     <div class="cardscontainer">
